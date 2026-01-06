@@ -25,14 +25,8 @@ cp /ctx/custom/flatpaks/*.preinstall /etc/flatpak/preinstall.d/
 
 echo "::endgroup::"
 
-/ctx/build/20-packages.sh
-
-echo "::group:: System Configuration"
-
-# Enable/disable systemd services
-systemctl enable podman.socket
-# Example: systemctl mask unwanted-service
-
-echo "::endgroup::"
+/ctx/build/02-packages.sh
+/ctx/build/03-systemd.sh
+/ctx/build/04-cleanup.sh
 
 echo "Custom build complete!"
