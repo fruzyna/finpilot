@@ -84,6 +84,6 @@ REMOVE_PACKAGES=(
     yelp
 )
 
-dnf -y remove "${INSTALLED_EXCLUDED[@]}"
+dnf -y remove "${REMOVE_PACKAGES[@]}"
 
 echo "Package installation complete!"

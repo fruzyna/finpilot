@@ -25,6 +25,8 @@ cp /ctx/custom/flatpaks/*.preinstall /etc/flatpak/preinstall.d/
 
 echo "::endgroup::"
 
+/ctx/build/20-packages.sh
+
 echo "::group:: System Configuration"
 
 # Enable/disable systemd services
