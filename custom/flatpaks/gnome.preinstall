@@ -1,0 +1,43 @@
+[Flatpak Preinstall com.mattjakeman.ExtensionManager]
+Branch=stable
+IsRuntime=false
+
+[Flatpak Preinstall org.gnome.Boxes]
+Branch=stable
+IsRuntime=false
+
+[Flatpak Preinstall org.gnome.Calculator]
+Branch=stable
+IsRuntime=false
+
+[Flatpak Preinstall org.gnome.Calendar]
+Branch=stable
+IsRuntime=false
+
+[Flatpak Preinstall org.gnome.clocks]
+Branch=stable
+IsRuntime=false
+
+[Flatpak Preinstall org.gnome.Connections]
+Branch=stable
+IsRuntime=false
+
+[Flatpak Preinstall org.gnome.Contacts]
+Branch=stable
+IsRuntime=false
+
+[Flatpak Preinstall org.gnome.FileRoller]
+Branch=stable
+IsRuntime=false
+
+[Flatpak Preinstall org.gnome.Firmware]
+Branch=stable
+IsRuntime=false
+
+[Flatpak Preinstall org.gnome.Logs]
+Branch=stable
+IsRuntime=false
+
+[Flatpak Preinstall org.gnome.TextEditor]
+Branch=stable
+IsRuntime=false

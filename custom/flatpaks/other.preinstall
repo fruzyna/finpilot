@@ -1,0 +1,27 @@
+[Flatpak Preinstall app.drey.Warp]
+Branch=stable
+IsRuntime=false
+
+[Flatpak Preinstall io.gitlab.adhami3310.Impression]
+Branch=stable
+IsRuntime=false
+
+[Flatpak Preinstall io.github.mrvladus.List]
+Branch=stable
+IsRuntime=false
+
+[Flatpak Preinstall org.kicad.KiCad]
+Branch=stable
+IsRuntime=false
+
+[Flatpak Preinstall org.libreoffice.LibreOffice]
+Branch=stable
+IsRuntime=false
+
+[Flatpak Preinstall org.openscad.OpenSCAD]
+Branch=stable
+IsRuntime=false
+
+[Flatpak Preinstall org.videolan.VLC]
+Branch=stable
+IsRuntime=false

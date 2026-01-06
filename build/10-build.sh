@@ -25,16 +25,6 @@ cp /ctx/custom/flatpaks/*.preinstall /etc/flatpak/preinstall.d/
 
 echo "::endgroup::"
 
-echo "::group:: Install Packages"
-
-# Install packages using dnf5
-# Example: dnf5 install -y tmux
-
-# Example using COPR with isolated pattern:
-# copr_install_isolated "ublue-os/staging" package-name
-
-echo "::endgroup::"
-
 echo "::group:: System Configuration"
 
 # Enable/disable systemd services
