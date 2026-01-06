@@ -22,12 +22,33 @@ FEDORA_PACKAGES=(
     iwd
     keepassxc
     lm_sensors
+    lsb_release
     podman-compose
     steam-devices
     waypipe
 )
 
 dnf -y install "${FEDORA_PACKAGES[@]}"
+
+#
+# Install fwupd with ublue ID fix
+#
+
+dnf -y copr enable ublue-os/staging
+dnf -y copr disable ublue-os/staging
+dnf -y swap --repo=copr:copr.fedorainfracloud.org:ublue-os:staging fwupd fwupd
+
+#
+# Install latest Flatpak to get preinstall command
+#
+
+dnf -y copr enable ublue-os/flatpak-test
+dnf -y copr disable ublue-os/flatpak-test
+dnf -y --repo=copr:copr.fedorainfracloud.org:ublue-os:flatpak-test swap flatpak flatpak
+dnf -y --repo=copr:copr.fedorainfracloud.org:ublue-os:flatpak-test swap flatpak-libs flatpak-libs
+dnf -y --repo=copr:copr.fedorainfracloud.org:ublue-os:flatpak-test swap flatpak-session-helper flatpak-session-helper
+# print information about flatpak package, it should say from our copr
+rpm -q flatpak --qf "%{NAME} %{VENDOR}\n" | grep ublue-os
 
 #
 # Install VS Code from MS repo
