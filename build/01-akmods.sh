@@ -5,7 +5,7 @@ set -oue pipefail
 
 echo "Installing kernel mods..."
 
-# install akmods
+# install common akmods
 dnf5 -y install \
     /ctx/akmods-common/rpms/ublue-os/ublue-os-akmods*.rpm \
     /ctx/akmods-common/rpms/kmods/kmod-framework-laptop*.rpm \
