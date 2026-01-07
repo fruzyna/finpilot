@@ -25,6 +25,7 @@ cp /ctx/custom/flatpaks/*.preinstall /etc/flatpak/preinstall.d/
 
 echo "::endgroup::"
 
+/ctx/build/01-akmods.sh
 /ctx/build/02-packages.sh
 /ctx/build/03-systemd.sh
 /ctx/build/04-cleanup.sh
