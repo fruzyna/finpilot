@@ -63,7 +63,7 @@ FROM ghcr.io/ublue-os/silverblue-main:latest
 ##   - Files from @ublue-os/brew at /oci/brew
 ## Scripts are run in numerical order (10-build.sh, 20-example.sh, etc.)
 
-ARG IMAGE_NAME="nvidia"
+ARG IMAGE_NAME="base"
 ENV LIAMOS_IMAGE_NAME=${IMAGE_NAME}
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
