@@ -18,4 +18,14 @@ dnf5 -y install \
 dnf5 -y install v4l2loopback /ctx/akmods-common/rpms/kmods/kmod-v4l2loopback*.rpm
 dnf5 -y remove rpmfusion-free-release rpmfusion-nonfree-release
 
+if [[ "$LIAMOS_IMAGE_NAME" =~ "nvidia" ]]; then
+    echo "::group:: Install Nvidia kernel modules"
+
+    dnf5 -y install \
+        /ctx/akmods-nvidia/rpms/ublue-os/ublue-os-nvidia*.rpm \
+        /ctx/akmods-nvidia/rpms/kmods/kmod-nvidia*.rpm
+
+    echo "::endgroup::"
+fi
+
 echo "::endgroup::"

@@ -105,6 +105,9 @@ echo "::endgroup::"
 echo "::group:: Configure Mutter"
 
 MUTTER_EXP_FEATS="'scale-monitor-framebuffer', 'xwayland-native-scaling'"
+if [[ "$LIAMOS_IMAGE_NAME" =~ "nvidia" ]]; then
+    MUTTER_EXP_FEATS="'kms-modifiers', ${MUTTER_EXP_FEATS}"
+fi
 tee /usr/share/glib-2.0/schemas/zz1-bluefin-modifications-mutter-exp-feats.gschema.override << EOF
 [org.gnome.mutter]
 experimental-features=[${MUTTER_EXP_FEATS}]
