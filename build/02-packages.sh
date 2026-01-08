@@ -3,11 +3,12 @@
 # Tell build process to exit if there are any errors.
 set -oue pipefail
 
-echo "Installing packages..."
+echo "::group:: Install packages"
 
 #
 # Install packages from Fedora repos
 #
+echo "::group:: Install from Fedora repos"
 
 FEDORA_PACKAGES=(
     android-tools
@@ -30,6 +31,9 @@ FEDORA_PACKAGES=(
 )
 
 dnf -y install "${FEDORA_PACKAGES[@]}"
+
+echo "::endgroup::"
+echo "::group:: Install from copr repos"
 
 #
 # Install fwupd with ublue ID fix
@@ -55,6 +59,9 @@ rpm -q flatpak --qf "%{NAME} %{VENDOR}\n" | grep ublue-os
 # Install VS Code from MS repo
 #
 
+echo "::endgroup::"
+echo "::group:: Install VS Code"
+
 tee /etc/yum.repos.d/vscode.repo <<'EOF'
 [code]
 name=Visual Studio Code
@@ -73,6 +80,9 @@ rm -f /etc/yum.repos.d/vscode.repo
 # Remove packages pre-installed from Fedora repos
 #
 
+echo "::endgroup::"
+echo "::group:: Remove unwanted packages"
+
 REMOVE_PACKAGES=(
     fedora-bookmarks
     fedora-chromium-config
@@ -90,6 +100,10 @@ dnf -y remove "${REMOVE_PACKAGES[@]}"
 #
 # Mutter experimental features
 #
+
+echo "::endgroup::"
+echo "::group:: Configure Mutter"
+
 MUTTER_EXP_FEATS="'scale-monitor-framebuffer', 'xwayland-native-scaling'"
 tee /usr/share/glib-2.0/schemas/zz1-bluefin-modifications-mutter-exp-feats.gschema.override << EOF
 [org.gnome.mutter]
@@ -106,4 +120,5 @@ glib-compile-schemas --strict /tmp/bluefin-schema-test
 echo "Compiling gschema to include bluefin setting overrides"
 glib-compile-schemas /usr/share/glib-2.0/schemas &>/dev/null
 
-echo "Package installation complete!"
+echo "::endgroup::"
+echo "::endgroup::"

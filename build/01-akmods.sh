@@ -3,7 +3,7 @@
 # Tell build process to exit if there are any errors.
 set -oue pipefail
 
-echo "Installing kernel mods..."
+echo "::group:: Install kernel modules"
 
 # install common akmods
 dnf5 -y install \
@@ -18,4 +18,4 @@ dnf5 -y install \
 dnf5 -y install v4l2loopback /ctx/akmods-common/rpms/kmods/kmod-v4l2loopback*.rpm
 dnf5 -y remove rpmfusion-free-release rpmfusion-nonfree-release
 
-echo "Kmod installation complete!"
+echo "::endgroup::"

@@ -37,34 +37,20 @@
 # Context stage - combine local and imported OCI container resources
 FROM scratch AS ctx
 
+# ARG is limited to the current build stage which is defined by FROM
+ARG FEDORA_VERSION="43"
+ARG KERNEL_BRANCH="main"
+
 COPY build /build
 COPY custom /custom
 # Copy from OCI containers to distinct subdirectories to avoid conflicts
 # Note: Renovate can automatically update these :latest tags to SHA-256 digests for reproducibility
 COPY --from=ghcr.io/projectbluefin/common:latest /system_files /oci/common
-COPY --from=ghcr.io/ublue-os/akmods:main-43 / /akmods-common
+COPY --from=ghcr.io/ublue-os/akmods:${KERNEL_BRANCH}-${FEDORA_VERSION} / /akmods-common
+COPY --from=ghcr.io/ublue-os/akmods-nvidia-open:${KERNEL_BRANCH}-${FEDORA_VERSION} / /akmods-nvidia
 
 # Base Image - GNOME included
 FROM ghcr.io/ublue-os/silverblue-main:latest
-
-
-## Alternative base images, no desktop included (uncomment to use):
-# FROM ghcr.io/ublue-os/base-main:latest    
-# FROM quay.io/centos-bootc/centos-bootc:stream10
-
-## Alternative GNOME OS base image (uncomment to use):
-# FROM quay.io/gnome_infrastructure/gnome-build-meta:gnomeos-nightly
-
-### /opt
-## Some bootable images, like Fedora, have /opt symlinked to /var/opt, in order to
-## make it mutable/writable for users. However, some packages write files to this directory,
-## thus its contents might be wiped out when bootc deploys an image, making it troublesome for
-## some packages. Eg, google-chrome, docker-desktop.
-##
-## Uncomment the following line if one desires to make /opt immutable and be able to be used
-## by the package manager.
-
-# RUN rm /opt && mkdir /opt
 
 ### MODIFICATIONS
 ## Make modifications desired in your image and install packages by modifying the build scripts.
@@ -76,6 +62,9 @@ FROM ghcr.io/ublue-os/silverblue-main:latest
 ##   - Files from @ublue-os/artwork at /oci/artwork
 ##   - Files from @ublue-os/brew at /oci/brew
 ## Scripts are run in numerical order (10-build.sh, 20-example.sh, etc.)
+
+ARG IMAGE_NAME="nvidia"
+ENV LIAMOS_IMAGE_NAME=${IMAGE_NAME}
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \

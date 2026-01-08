@@ -9,6 +9,8 @@ set -eoux pipefail
 # It uses set -eoux pipefail for strict error handling and debugging.
 ###############################################################################
 
+echo "Building $LIAMOS_IMAGE_NAME"
+
 # Source helper functions
 # shellcheck source=/dev/null
 source /ctx/build/copr-helpers.sh

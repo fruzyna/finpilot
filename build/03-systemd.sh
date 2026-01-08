@@ -3,10 +3,10 @@
 # Tell build process to exit if there are any errors.
 set -oue pipefail
 
-echo "Systemd configuration..."
+echo "::group:: Configure Systemd"
 
 # Enable/disable systemd services
 systemctl enable podman.socket
 # Example: systemctl mask unwanted-service
 
-echo "Systemd configuration complete!"
+echo "::endgroup::"

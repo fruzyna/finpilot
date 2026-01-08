@@ -3,7 +3,7 @@
 # Tell build process to exit if there are any errors.
 set -oue pipefail
 
-echo "Cleaning up..."
+echo "::group:: Cleanup"
 
 # Hide Desktop Files. Hidden removes mime associations
 for file in fish htop nvtop; do
@@ -12,4 +12,4 @@ for file in fish htop nvtop; do
     fi
 done
 
-echo "Cleanup complete!"
+echo "::endgroup::"
