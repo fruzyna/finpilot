@@ -40,36 +40,30 @@ FROM scratch AS ctx
 # ARG is limited to the current build stage which is defined by FROM
 ARG FEDORA_VERSION="43"
 ARG KERNEL_BRANCH="main"
+ENV LIAMOS_KERNEL_BRANCH=${KERNEL_BRANCH}
 
 COPY build /build
 COPY custom /custom
 # Copy from OCI containers to distinct subdirectories to avoid conflicts
 # Note: Renovate can automatically update these :latest tags to SHA-256 digests for reproducibility
 COPY --from=ghcr.io/projectbluefin/common:latest /system_files /oci/common
-COPY --from=ghcr.io/ublue-os/akmods:${KERNEL_BRANCH}-${FEDORA_VERSION} / /akmods-common
-COPY --from=ghcr.io/ublue-os/akmods-nvidia-open:${KERNEL_BRANCH}-${FEDORA_VERSION} / /akmods-nvidia
+COPY --from=ghcr.io/ublue-os/akmods:${KERNEL_BRANCH}-${FEDORA_VERSION} / /akmods/common
+COPY --from=ghcr.io/ublue-os/akmods-nvidia-open:${KERNEL_BRANCH}-${FEDORA_VERSION} / /akmods/nvidia
 
 # Base Image - GNOME included
 FROM ghcr.io/ublue-os/silverblue-main:latest
 
-### MODIFICATIONS
-## Make modifications desired in your image and install packages by modifying the build scripts.
-## The following RUN directive mounts the ctx stage which includes:
-##   - Local build scripts from /build
-##   - Local custom files from /custom
-##   - Files from @projectbluefin/common at /oci/common
-##   - Files from @projectbluefin/branding at /oci/branding
-##   - Files from @ublue-os/artwork at /oci/artwork
-##   - Files from @ublue-os/brew at /oci/brew
-## Scripts are run in numerical order (10-build.sh, 20-example.sh, etc.)
+# KERNEL_BRANCH build-arg is accessible during build as LIAMOS_KERNEL_BRANCH
+ARG KERNEL_BRANCH
+ENV LIAMOS_KERNEL_BRANCH=${KERNEL_BRANCH}
 
+# IMAGE_NAME build-arg is accessible during build as LIAMOS_IMAGE_NAME
 ARG IMAGE_NAME="liamos-base"
 ENV LIAMOS_IMAGE_NAME=${IMAGE_NAME}
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
-    --mount=type=tmpfs,dst=/tmp \
     /ctx/build/00-build.sh
     
 ### LINTING

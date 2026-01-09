@@ -3,25 +3,46 @@
 # Tell build process to exit if there are any errors.
 set -oue pipefail
 
+# If main kernel branch is used, kernel does not need to be rebuilt to make akmods
+if [[ "$LIAMOS_KERNEL_BRANCH" != "main" ]]; then
+    echo "::group:: Replace kernel"
+
+    # Remove existing kernel
+    for pkg in kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra; do
+        rpm --erase $pkg --nodeps
+    done
+
+    # Install new kernel
+    dnf5 -y install \
+        /ctx/akmods/common/kernel-rpms/kernel-[0-9]*.rpm \
+        /ctx/akmods/common/kernel-rpms/kernel-core-*.rpm \
+        /ctx/akmods/common/kernel-rpms/kernel-modules-*.rpm \
+        /ctx/akmods/common/kernel-rpms/kernel-devel-*.rpm
+
+    echo "::endgroup::"
+fi
+
+dnf5 versionlock add kernel kernel-devel kernel-devel-matched kernel-core kernel-modules kernel-modules-core kernel-modules-extra
+
 echo "::group:: Install kernel modules"
 
-# install common akmods
+# Install common akmods
 dnf5 -y install \
-    /ctx/akmods-common/rpms/ublue-os/ublue-os-akmods*.rpm \
-    /ctx/akmods-common/rpms/kmods/kmod-framework-laptop*.rpm \
-    /ctx/akmods-common/rpms/kmods/kmod-xone*.rpm
+    /ctx/akmods/common/rpms/ublue-os/ublue-os-akmods*.rpm \
+    /ctx/akmods/common/rpms/kmods/kmod-framework-laptop*.rpm \
+    /ctx/akmods/common/rpms/kmods/kmod-xone*.rpm
 
-# install v4l2loopback akmod
+# Install v4l2loopback akmod
 dnf5 -y install \
     https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-"$(rpm -E %fedora)".noarch.rpm \
     https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm
-dnf5 -y install v4l2loopback /ctx/akmods-common/rpms/kmods/kmod-v4l2loopback*.rpm
+dnf5 -y install v4l2loopback /ctx/akmods/common/rpms/kmods/kmod-v4l2loopback*.rpm
 dnf5 -y remove rpmfusion-free-release rpmfusion-nonfree-release
 
 if [[ "$LIAMOS_IMAGE_NAME" =~ "nvidia" ]]; then
     echo "::group:: Install Nvidia kernel modules"
 
-    cp -r /ctx/akmods-nvidia/rpms /tmp/akmods-rpms/
+    cp -r /ctx/akmods/nvidia/rpms /tmp/akmods-rpms/
 
     # Monkey patch right now...
     if ! grep -q negativo17 <(rpm -qi mesa-dri-drivers); then
