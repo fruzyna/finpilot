@@ -24,7 +24,7 @@ COPY --from=ghcr.io/ublue-os/akmods-nvidia-open:${KERNEL_BRANCH}-${FEDORA_VERSIO
 FROM ghcr.io/ublue-os/silverblue-main:latest
 
 # KERNEL_BRANCH build-arg is accessible during build as LIAMOS_KERNEL_BRANCH
-ARG KERNEL_BRANCH
+ARG KERNEL_BRANCH="main"
 ENV LIAMOS_KERNEL_BRANCH=${KERNEL_BRANCH}
 
 # IMAGE_NAME build-arg is accessible during build as LIAMOS_IMAGE_NAME

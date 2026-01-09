@@ -11,10 +11,6 @@ set -eoux pipefail
 
 echo "Building $LIAMOS_IMAGE_NAME"
 
-# Source helper functions
-# shellcheck source=/dev/null
-source /ctx/build/copr-helpers.sh
-
 echo "::group:: Copy Custom Files"
 
 # Consolidate Just files

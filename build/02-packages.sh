@@ -35,6 +35,10 @@ dnf -y install "${FEDORA_PACKAGES[@]}"
 echo "::endgroup::"
 echo "::group:: Install from copr repos"
 
+# Source helper functions
+# shellcheck source=/dev/null
+source /ctx/build/copr-helpers.sh
+
 #
 # Install fwupd with ublue ID fix
 #
