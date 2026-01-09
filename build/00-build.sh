@@ -17,7 +17,7 @@ source /ctx/build/copr-helpers.sh
 
 echo "::group:: Copy Custom Files"
 
-# Consolidate Just Files
+# Consolidate Just files
 mkdir -p /usr/share/ublue-os/just/
 find /ctx/custom/ujust -iname '*.just' -exec printf "\n\n" \; -exec cat {} \; >> /usr/share/ublue-os/just/60-custom.just
 
@@ -27,6 +27,7 @@ cp /ctx/custom/flatpaks/*.preinstall /etc/flatpak/preinstall.d/
 
 echo "::endgroup::"
 
+# Manually run build scripts in order, this allegedly happens automatically, but I haven't seen that
 /ctx/build/01-akmods.sh
 /ctx/build/02-packages.sh
 /ctx/build/03-systemd.sh

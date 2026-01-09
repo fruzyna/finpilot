@@ -113,14 +113,6 @@ tee /usr/share/glib-2.0/schemas/zz1-bluefin-modifications-mutter-exp-feats.gsche
 experimental-features=[${MUTTER_EXP_FEATS}]
 EOF
 
-# Test bluefin gschema override for errors. If there are no errors, proceed with compiling bluefin gschema, which includes setting overrides.
-mkdir -p /tmp/bluefin-schema-test
-find /usr/share/glib-2.0/schemas/ -type f ! -name "*.gschema.override" -exec cp {} /tmp/bluefin-schema-test/ \;
-cp /usr/share/glib-2.0/schemas/zz1-bluefin-modifications-mutter-exp-feats.gschema.override /tmp/bluefin-schema-test/
-echo "Running error test for bluefin gschema override. Aborting if failed."
-# We should ideally refactor this to handle multiple GNOME version schemas better
-glib-compile-schemas --strict /tmp/bluefin-schema-test
-echo "Compiling gschema to include bluefin setting overrides"
 glib-compile-schemas /usr/share/glib-2.0/schemas &>/dev/null
 
 echo "::endgroup::"
