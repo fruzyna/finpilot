@@ -5,8 +5,11 @@ set -oue pipefail
 
 echo "::group:: Configure Systemd"
 
-# Enable/disable systemd services
 systemctl enable podman.socket
-# Example: systemctl mask unwanted-service
+
+# replace Fedora update timers with UUPD
+systemctl enable uupd.timer
+systemctl disable rpm-ostreed-automatic.timer
+systemctl disable flatpak-system-update.timer
 
 echo "::endgroup::"

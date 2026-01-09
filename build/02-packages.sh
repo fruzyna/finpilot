@@ -56,6 +56,12 @@ dnf -y --repo=copr:copr.fedorainfracloud.org:ublue-os:flatpak-test swap flatpak-
 rpm -q flatpak --qf "%{NAME} %{VENDOR}\n" | grep ublue-os
 
 #
+# Install UUPD updater
+#
+
+copr_install_isolated "ublue-os/packages" "uupd"
+
+#
 # Install VS Code from MS repo
 #
 
