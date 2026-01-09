@@ -21,6 +21,9 @@ find /ctx/custom/ujust -iname '*.just' -exec printf "\n\n" \; -exec cat {} \; >>
 mkdir -p /etc/flatpak/preinstall.d/
 cp /ctx/custom/flatpaks/*.preinstall /etc/flatpak/preinstall.d/
 
+# Copy bazaar service file
+cp /ctx/oci/common/bluefin/usr/lib/systemd/user/bazaar.service /usr/lib/systemd/user
+
 echo "::endgroup::"
 
 # Manually run build scripts in order, this allegedly happens automatically, but I haven't seen that

@@ -5,6 +5,8 @@ set -oue pipefail
 
 echo "::group:: Configure Systemd"
 
+systemctl --global enable bazaar.service
+
 systemctl enable podman.socket
 
 # replace Fedora update timers with UUPD
