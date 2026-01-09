@@ -9,7 +9,7 @@ FROM scratch AS ctx
 
 # ARG is limited to the current build stage which is defined by FROM
 ARG FEDORA_VERSION="43"
-ARG KERNEL_BRANCH="centos"
+ARG KERNEL_BRANCH="main"
 ENV LIAMOS_KERNEL_BRANCH=${KERNEL_BRANCH}
 
 COPY build /build
