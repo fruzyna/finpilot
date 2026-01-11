@@ -6,6 +6,10 @@ IsRuntime=false
 Branch=stable
 IsRuntime=false
 
+[Flatpak Preinstall io.gimp.GIMP]
+Branch=stable
+IsRuntime=false
+
 [Flatpak Preinstall io.github.mrvladus.List]
 Branch=stable
 IsRuntime=false
