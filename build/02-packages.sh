@@ -17,6 +17,7 @@ FEDORA_PACKAGES=(
     fish
     git-lfs
     git-credential-libsecret
+    gnome-boxes
     gnome-shell-extension-appindicator
     gnome-shell-extension-drive-menu
     gnome-shell-extension-launch-new-instance
