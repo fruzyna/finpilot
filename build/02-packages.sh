@@ -13,6 +13,7 @@ echo "::group:: Install from Fedora repos"
 FEDORA_PACKAGES=(
     android-tools
     ddcutil
+    dhcp-server
     firefox
     fish
     git-lfs
